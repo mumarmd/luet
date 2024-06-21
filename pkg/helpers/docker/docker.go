@@ -31,8 +31,8 @@ import (
 
 	fileHelper "github.com/mudler/luet/pkg/helpers/file"
 
+	"github.com/distribution/reference"
 	"github.com/docker/cli/cli/trust"
-	"github.com/docker/distribution/reference"
 	registrytypes "github.com/docker/docker/api/types/registry"
 	"github.com/docker/docker/registry"
 	"github.com/google/go-containerregistry/pkg/authn"

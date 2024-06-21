@@ -138,3 +138,5 @@ require (
 	google.golang.org/protobuf v1.33.0 // indirect
 	gopkg.in/ini.v1 v1.63.2 // indirect
 )
+
+replace github.com/docker/distribution => github.com/distribution/distribution v2.8.3+incompatible
