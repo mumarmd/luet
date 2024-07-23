@@ -16,6 +16,7 @@
 package docker
 
 import (
+	"archive/tar"
 	"context"
 	"encoding/hex"
 	"net/http"
@@ -137,6 +138,15 @@ type UnpackEventData struct {
 	Dest  string
 }
 
+func setUIDGID(h *tar.Header) (bool, error) {
+	// Set the desired UID and GID
+	h.Uid = os.Getuid()
+	h.Gid = os.Getgid()
+
+	// Return true to indicate that this header should be included in the extraction
+	return true, nil
+}
+
 // DownloadAndExtractDockerImage extracts a container image natively. It supports privileged/unprivileged mode
 func DownloadAndExtractDockerImage(ctx luettypes.Context, image, dest string, auth *registrytypes.AuthConfig, verify bool) (*images.Image, error) {
 	if verify {
@@ -185,7 +195,7 @@ func DownloadAndExtractDockerImage(ctx luettypes.Context, image, dest string, au
 		ctx,
 		img,
 		dest,
-		nil,
+		setUIDGID,
 	)
 	if err != nil {
 		return nil, err
@@ -249,7 +259,7 @@ func ExtractDockerImage(ctx luettypes.Context, local, dest string) (*images.Imag
 		ctx,
 		img,
 		dest,
-		nil,
+		setUIDGID,
 	)
 
 	if err != nil {
