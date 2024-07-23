@@ -17,9 +17,9 @@ fmt:
 
 .PHONY: test
 test:
-	GO111MODULE=off go get github.com/onsi/ginkgo/v2
+	go get github.com/onsi/ginkgo/v2
 	go install github.com/onsi/ginkgo/v2/ginkgo
-	GO111MODULE=off go get github.com/onsi/gomega/...
+	go get github.com/onsi/gomega/...
 	ginkgo -r --flake-attempts=3 ./...
 
 .PHONY: test-integration
@@ -48,10 +48,10 @@ clean:
 deps:
 	go env
 	# Installing dependencies...
-	GO111MODULE=off go get golang.org/x/lint/golint
-	GO111MODULE=off go get github.com/mitchellh/gox
-	GO111MODULE=off go get github.com/onsi/ginkgo/ginkgo
-	GO111MODULE=off go get github.com/onsi/gomega/...
+	go get golang.org/x/lint/golint
+	go get github.com/mitchellh/gox
+	go get github.com/onsi/ginkgo/ginkgo
+	go get github.com/onsi/gomega/...
 
 .PHONY: build
 build:
@@ -87,7 +87,7 @@ test-integration-docker:
 				bash -c "apt-get update && apt-get install docker.io && make test-integration"
 
 multiarch-build:
-	goreleaser build --snapshot --rm-dist
+	goreleaser build --snapshot --clean
 
 multiarch-build-small:
 	@$(MAKE) multiarch-build
